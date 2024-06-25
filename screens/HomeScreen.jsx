@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View, TextInput } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
 import { CheckBox } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTaskToStore } from '../reducers/tasks';
@@ -15,6 +15,7 @@ export default function HomeScreen({ navigation }) {
         if (task) {
             dispatch(addTaskToStore({ id: Date.now(), task: task, urgent: checked }));
             setTask("");
+            setChecked(false);
         }
     };
 
@@ -27,7 +28,7 @@ export default function HomeScreen({ navigation }) {
     return (
         <View style={styles.Gcontainer}>
             <View style={styles.title}>
-                <Text>Your ToDoList</Text>
+                <Text style={styles.titleText}>Your ToDoList</Text>
             </View>
             <View style={styles.container}>
                 <View style={styles.containerBtn}>
@@ -50,9 +51,9 @@ export default function HomeScreen({ navigation }) {
                         <Text>Add</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.containerList}>
+                <ScrollView style={styles.containerList}>
                     {taskList}
-                </View>
+                </ScrollView>
             </View>
         </View>
     );
@@ -70,24 +71,25 @@ const styles = StyleSheet.create({
     containerList: {
         display: 'flex',
         flex: 1,
-        backgroundColor: 'blue',
+        //backgroundColor: 'blue',
         width: '95%',
     },
     CheckBox: {
         width: 'auto',
+
     },
     containerBtn: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'green',
+        backgroundColor: 'orange',
         width: '100%',
         borderRadius: 20,
         justifyContent: 'space-around',
     },
     input: {
         height: 40,
-        width: '40%',
+        width: '50%',
         margin: 12,
         borderWidth: 1,
         padding: 10,
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
     },
     btn: {
         height: 40,
-        width: '20%',
+        width: '13%',
         margin: 12,
         borderWidth: 1,
         padding: 10,
@@ -106,15 +108,21 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'orange',
+        //backgroundColor: 'orange',
         width: '80%',
         marginTop: '10%',
+    },
+    titleText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        fontFamily: 'cursive',
     },
     container: {
         flex: 5,
         alignItems: 'center',
         backgroundColor: 'grey',
-        width: '90%',
+        gap: 10,
+        width: '95%',
         marginBottom: '10%',
         borderRadius: 20,
     },
