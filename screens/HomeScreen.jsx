@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput } from 'react-native';
 import { CheckBox } from '@rneui/themed';
-import Tasks from '../Components/Tasks'; 
+import { useDispatch } from 'react-redux';
+import { addTaskToStore } from '../reducers/Tasks';
+
 
 export default function HomeScreen({ navigation }) {
+    const dispatch = useDispatch();
     const [checked, setChecked] = useState(false);
-    const [ tasks, setTasks] = useState("");
-    console.log(tasks)
+    const [tasks, setTasks] = useState("");
+
+    const addTask = () => {
+        if (tasks) {
+            dispatch(addTaskToStore({ task: tasks, urgent: checked }));
+            setTasks("");
+        }
+    }
+
 
     return (
         <View style={styles.Gcontainer}>
@@ -15,7 +25,7 @@ export default function HomeScreen({ navigation }) {
             </View>
             <View style={styles.container}>
                 <View style={styles.containerBtn}>
-                    <TextInput style={styles.input} placeholder="Add a task" onChange={(e) => setTasks(e.target.value)} value={tasks}/>
+                    <TextInput style={styles.input} placeholder="Add a task" onChangeText={(e) => setTasks(e)} value={tasks}/>
                     <View style={styles.CheckBox}>
                         <CheckBox checked={checked} onPress={() => setChecked(!checked)} size={18} title={"Urgent"} containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }} />
                     </View>
