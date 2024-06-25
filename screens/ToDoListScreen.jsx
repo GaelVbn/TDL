@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, TextInput, ScrollView } from 'react-native';
-import { CheckBox } from '@rneui/themed';
+import { CheckBox, Icon } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTaskToStore } from '../reducers/tasks';
 import Tasks from '../Components/Tasks'; // Correct path to your Tasks component
@@ -35,20 +35,25 @@ export default function HomeScreen({ navigation }) {
                     <TextInput
                         style={styles.input}
                         placeholder="Add a task"
+                        placeholderTextColor="#C5C5A9"
                         onChangeText={(e) => setTask(e)}
                         value={task}
                     />
                     <View style={styles.CheckBox}>
                         <CheckBox
+                            checkedIcon="checkbox-marked"
+                            uncheckedIcon="checkbox-blank-outline"
+                            checkedColor="#DA7B27"
                             checked={checked}
                             onPress={() => setChecked(!checked)}
-                            size={18}
                             title={"Urgent"}
+                            iconType="material-community"
+                            textStyle={{ color: 'black' }}
                             containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
                         />
                     </View>
                     <TouchableOpacity style={styles.btn} onPress={addTask}>
-                        <Text>Add</Text>
+                        <Text style={styles.btnText}>Add</Text>
                     </TouchableOpacity>
                 </View>
                 <ScrollView style={styles.containerList}>
@@ -62,35 +67,34 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
     Gcontainer: {
         flex: 1,
-        backgroundColor: '#fff',
         width: '100%',
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#EEE6D8',
     },
     containerList: {
         display: 'flex',
         flex: 1,
         //backgroundColor: 'blue',
+        marginTop: '5%',
         width: '95%',
     },
     CheckBox: {
         width: 'auto',
-
+       // backgroundColor: 'yellow',
     },
     containerBtn: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'orange',
+        backgroundColor: '#606C5A',
         width: '100%',
         borderRadius: 20,
-        justifyContent: 'space-around',
     },
     input: {
         height: 40,
-        width: '50%',
-        margin: 12,
+        width: '45%',
         borderWidth: 1,
         padding: 10,
         borderRadius: 10,
@@ -98,11 +102,13 @@ const styles = StyleSheet.create({
     btn: {
         height: 40,
         width: '13%',
-        margin: 12,
-        borderWidth: 1,
         padding: 10,
         borderRadius: 10,
-        backgroundColor: 'red',
+        backgroundColor: '#DA7B27',
+        marginRight: 10,
+    },
+    btnText: {
+        color: 'black',
     },
     title: {
         flex: 1,
@@ -120,10 +126,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 5,
         alignItems: 'center',
-        backgroundColor: 'grey',
-        gap: 10,
+        backgroundColor: '#424340',
         width: '95%',
-        marginBottom: '10%',
+        height: '50%',
         borderRadius: 20,
+        justifyContent: 'center',
+        marginBottom: '10%',
     },
 });

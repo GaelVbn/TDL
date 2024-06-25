@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
-import { CheckBox } from '@rneui/themed';
+import { CheckBox, Icon} from '@rneui/themed';
 import { Ionicons } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux';
 import { removeTaskFromStore } from '../reducers/tasks';
@@ -19,11 +19,30 @@ export default function Tasks({ id, task, urgent }) {
         <View style={styles.Gcontainer}>
             <View style={styles.CheckBox}>
                 <CheckBox
+                      checkedIcon={
+                        <Icon
+                          name="radio-button-checked"
+                          type="material"
+                          color="#DA7B27"
+                          size={25}
+                          iconStyle={{ marginRight: 10 }}
+                        />
+                      }
+                      uncheckedIcon={
+                        <Icon
+                          name="radio-button-unchecked"
+                          type="material"
+                          color="grey"
+                          size={25}
+                          iconStyle={{ marginRight: 10 }}
+                        />
+                      }
                     checked={checked}
                     onPress={() => setChecked(!checked)}
-                    size={18}
-                    containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
+                    size={25}
+                    containerStyle={{ backgroundColor: 'transparent'}}
                         />
+                        
             </View>
             <View style={styles.taskContainer} >
             <Text style={{ textDecorationLine: checked ? 'line-through' : 'none', fontSize: 20, }}>{task}</Text>
@@ -48,7 +67,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '100%',
         height: 'auto',
-        backgroundColor: 'yellow',
+        backgroundColor: '#C5C5A9',
         justifyContent: 'space-between',
         borderRadius: 20,
 
@@ -60,7 +79,7 @@ const styles = StyleSheet.create({
         height: 'auto',
         alignItems: 'center',
         borderRadius: 20,
-        //backgroundColor: 'white',
+        backgroundColor: '#F8FBF1',
     },
     urgentContainer: {
         display: 'flex',
@@ -78,11 +97,11 @@ const styles = StyleSheet.create({
     trashContainer: {
         display: 'flex',
         flexDirection: 'row',
-        width: '15%',
+        width: 'auto',
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-
+        marginRight: '4%',
     },
     Tasks: {
         marginLeft: 10,
