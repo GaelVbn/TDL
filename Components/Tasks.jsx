@@ -1,8 +1,17 @@
 import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeTaskFromStore } from '../reducers/tasks';
 
 export default function Tasks({ id, task, urgent }) {
+    const dispatch = useDispatch();
+    const remove = useSelector((state) => state.tasks.value);
+    const removeTask = (id) => {
+        dispatch(removeTaskFromStore(id))
+    };
+
+
     return (
         <View style={styles.Gcontainer}>
             <Text style={styles.Tasks}>{task}</Text>
@@ -11,8 +20,8 @@ export default function Tasks({ id, task, urgent }) {
                     <Text style={styles.Important}>Urgent</Text>
                 </View>
             )}
-            <View style={styles.trashContainer}>
-                <Ionicons name="trash-outline" size={24} color="black" />
+            <View style={styles.trashContainer} >
+                <Ionicons name="trash-outline" size={24} color="black" onPress={() => removeTask(id)} />
             </View>
         </View>
     );

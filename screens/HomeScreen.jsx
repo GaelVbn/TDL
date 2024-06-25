@@ -18,7 +18,9 @@ export default function HomeScreen({ navigation }) {
         }
     };
 
-    const taskList = tasks.map((task) => (
+    const sortedTasks = tasks.slice().sort((a, b) => b.urgent - a.urgent);
+
+    const taskList = sortedTasks.map((task) => (
         <Tasks key={task.id} id={task.id} task={task.task} urgent={task.urgent} />
     ));
 
