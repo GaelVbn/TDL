@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ToDoListScreen from './screens/ToDoListScreen';
+import Event from './screens/Event';
 import tasks from './reducers/tasks';  
 
 import { Provider } from 'react-redux';
@@ -20,6 +21,7 @@ const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="ToDoList" component={ToDoListScreen} />
+      <Tab.Screen name="Event" component={Event} />
     </Tab.Navigator>
   );
 }
