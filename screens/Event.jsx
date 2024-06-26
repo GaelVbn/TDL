@@ -1,79 +1,171 @@
-import React from 'react';
-import { useState } from 'react';
-import { View, Text, StyleSheet, Modal, TextInput, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Modal, TextInput, Button, StyleSheet, Platform  } from 'react-native';
 import { Agenda } from 'react-native-calendars';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import useStore from '../storageState/store';
+import { EvilIcons } from '@expo/vector-icons';
 
-export default function Event() {
-    const [items, setItems] = useState({});
-    const [selectedDate, setSelectedDate] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
-    const [note, setNote] = useState('');
+const MyAgenda = () => {
+  const { items, setItems } = useStore();
+  const [selectedDate, setSelectedDate] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [note, setNote] = useState('');
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
 
-    const loadItems = (day) => {
-        const newItems = {};
-        for (let i = -15; i < 85; i++) {
-          const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-          const strTime = new Date(time).toISOString().split('T')[0];
-          if (!items[strTime]) {
-            newItems[strTime] = [];
-          } else {
-            newItems[strTime] = items[strTime];
-          }
-        }
-        setItems(newItems);
-      };
-    
+  const loadItems = (day) => {
+    const newItems = {};
+    for (let i = -15; i < 85; i++) {
+      const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+      const strTime = new Date(time).toISOString().split('T')[0];
+      if (!items[strTime]) {
+        newItems[strTime] = [];
+      } else {
+        newItems[strTime] = items[strTime];
+      }
+    }
+    setItems(newItems);
+  };
 
-    const renderItem = (item) => {  
-        return (
-        <View style={{ margin: 10, padding: 10, backgroundColor: 'white' }}>
-            <Text>{item.note}</Text>
-        </View>
-        );
-    };
+  const removeEvent = (date, index) => {
+    const newItems = { ...items };
+    newItems[date].splice(index, 1);
+    if (newItems[date].length === 0) {
+      delete newItems[date];
+    }
+    setItems(newItems);
+  };
 
-    const handleDayPress = (day) => {
-        setSelectedDate(day.dateString);
-        setModalVisible(true);
-      };
-    
-    const saveNote = () => {
-        const newItems = { ...items };
-        if (!newItems[selectedDate]) {
-          newItems[selectedDate] = [];
-        }
-        newItems[selectedDate].push({ note });
-        setItems(newItems);
-        setModalVisible(false);
-        setNote('');
-      };
+  const renderItem = (item, firstItemInDay, index) => {
+    return (
+      <View style={styles.item}>
+        <Text>{item.startTime} - {item.endTime}{"\n"}</Text>
+        <Text>{item.note}</Text>
+        <EvilIcons 
+          name="trash" 
+          size={24} 
+          color="black" 
+          style={{ position: 'absolute', right: '5%', top: '50%' }} 
+          onPress={() => removeEvent(item.date, index)} 
+        />
+      </View>
+    );
+  };
 
-      return (
-        <View style={{ flex: 1, marginTop: '15%' }}>
-          <Agenda
-            items={items}
-            loadItemsForMonth={loadItems}
-            selected={new Date().toISOString().split('T')[0]}
-            renderItem={renderItem}
-            onDayPress={handleDayPress}
+  const handleDayPress = (day) => {
+    setSelectedDate(day.dateString);
+    setModalVisible(true);
+  };
+
+  const saveNote = () => {
+    const newItems = { ...items };
+    if (!newItems[selectedDate]) {
+      newItems[selectedDate] = [];
+    }
+    newItems[selectedDate].push({ 
+        note, 
+        startTime: startTime.toTimeString().split(' ')[0],
+        endTime: endTime.toTimeString().split(' ')[0],
+        date: selectedDate,
+    });
+    setItems(newItems);
+    setModalVisible(false);
+    setNote('');
+    setStartTime(new Date());
+    setEndTime(new Date());
+  };
+
+
+  return (
+    <View style={{ flex: 1, marginTop: '15%' }}>
+      <Agenda
+        items={items}
+        loadItemsForMonth={loadItems}
+        selected={new Date().toISOString().split('T')[0]}
+        renderItem={renderItem}
+        onDayPress={handleDayPress}
+      />
+      <Modal
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modal}>
+          <Text style={{marginBottom: 20}}>Ajouter une note pour {selectedDate}</Text>
+          <TextInput
+           
+            value={note}
+            onChangeText={setNote}
+            placeholder="Entrez votre note"
+            style={styles.input}
           />
-          <Modal
-            visible={modalVisible}
-            animationType="slide"
-            onRequestClose={() => setModalVisible(false)}
-          >
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-              <Text>Ajouter une note pour {selectedDate}</Text>
-              <TextInput
-                value={note}
-                onChangeText={setNote}
-                placeholder="Entrez votre note"
-                style={{ height: 40, borderColor: 'gray', borderWidth: 1, width: '80%', marginBottom: 20 }}
-              />
-              <Button title="Enregistrer" onPress={saveNote} />
-              <Button title="Annuler" onPress={() => setModalVisible(false)} />
-            </View>
-          </Modal>
+          <View style = {{flexDirection: 'row'}}>
+          <View style={styles.timeContainer}>
+            <Button title="Heure de début" />
+          </View>
+          <Text style = {{margin: 10}}> - </Text>
+          <View style={styles.timeContainer}>
+            <Button title="Heure de fin" />
+          </View>
+          </View>
+          <View style={ {flexDirection: 'row', gap: 80}}>
+          { (
+            <DateTimePicker
+              value={startTime}
+              mode="time"
+              display="default"
+              onChange={(event, date) => {
+                if (date) setStartTime(date);
+              }}
+            />
+          )}
+          { (
+            <DateTimePicker
+              value={endTime}
+              mode="time"
+              display="default"
+              onChange={(event, date) => {
+                if (date) setEndTime(date);
+              }}
+            />
+          )}
+          </View>
+          <View style={{justifyContent: 'space-between', marginTop: 30}}>
+          <Button title="Enregistrer" onPress={saveNote} />
+          <Button title="Annuler" onPress={() => setModalVisible(false)} />
+          </View>
         </View>
-      );
-    };
+      </Modal>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  item: {
+    margin: 10,
+    padding: 10,
+    backgroundColor: 'white',
+  },
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width: '80%',
+    height: 100,
+    marginBottom: 20,
+    borderRadius: 10,
+    padding: 10,
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+});
+
+export default MyAgenda;
