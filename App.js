@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ToDoListScreen from './screens/ToDoListScreen';
 import Event from './screens/Event';
 import tasks from './reducers/tasks';  
+import notes from './reducers/notes';
+import Notes from './screens/Notes';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';  // Import AsyncStorage
@@ -13,7 +15,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-const reducers = combineReducers({ tasks });
+const reducers = combineReducers({ tasks, notes });
 const persistConfig = { key: 'root', storage: AsyncStorage };  // Use AsyncStorage
 
 const persistedReducer = persistReducer(persistConfig, reducers);
@@ -40,6 +42,8 @@ const TabNavigator = () => {
           iconName = 'list-ul';
         } else if (route.name === 'Calendar') {
           iconName = 'calendar';
+        } else if (route.name === 'Notes') {
+          iconName = 'sticky-note';
         }
  
         return <FontAwesome name={iconName} size={size} color={color} />;
@@ -51,6 +55,7 @@ const TabNavigator = () => {
     })}>
       <Tab.Screen name="ToDoList" component={ToDoListScreen} />
       <Tab.Screen name="Calendar" component={Event} />
+      <Tab.Screen name="Notes" component={Notes} />
     </Tab.Navigator>
   );
 }
