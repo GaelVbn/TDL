@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTaskToStore } from '../reducers/tasks';
 import Tasks from '../Components/Tasks'; // Correct path to your Tasks component
 
+
+
+
 export default function HomeScreen({ navigation }) {
     const dispatch = useDispatch();
     const [checked, setChecked] = useState(false);
@@ -28,14 +31,14 @@ export default function HomeScreen({ navigation }) {
     return (
         <View style={styles.Gcontainer}>
             <View style={styles.title}>
-                <Text style={styles.titleText}>Your ToDoList</Text>
+                <Text style={styles.titleText}>TO DO LIST</Text>
             </View>
             <View style={styles.container}>
                 <View style={styles.containerBtn}>
                     <TextInput
                         style={styles.input}
                         placeholder="Add a task"
-                        placeholderTextColor="#C5C5A9"
+                        placeholderTextColor="grey"
                         onChangeText={(e) => setTask(e)}
                         value={task}
                     />
@@ -48,7 +51,7 @@ export default function HomeScreen({ navigation }) {
                             onPress={() => setChecked(!checked)}
                             title={"Urgent"}
                             iconType="material-community"
-                            textStyle={{ color: 'black' }}
+                            textStyle={{ color: 'black', fontFamily: 'ChakraPetch_400Regular', }}
                             containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
                         />
                     </View>
@@ -71,7 +74,6 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#EEE6D8',
     },
     containerList: {
         display: 'flex',
@@ -88,16 +90,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#606C5A',
+        backgroundColor: '#7E7E7E',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },  
+        shadowOpacity: 0.1,
         width: '100%',
         borderRadius: 20,
     },
     input: {
         height: 40,
         width: '45%',
-        borderWidth: 1,
         padding: 10,
         borderRadius: 10,
+        backgroundColor: '#e5e7e6',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },  
+        shadowOpacity: 0.4,
+        fontFamily: 'ChakraPetch_400Regular',
     },
     btn: {
         height: 40,
@@ -106,9 +115,13 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: '#DA7B27',
         marginRight: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },  
+        shadowOpacity: 0.4,
     },
     btnText: {
         color: 'black',
+        fontFamily: 'ChakraPetch_400Regular',
     },
     title: {
         flex: 1,
@@ -116,17 +129,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         //backgroundColor: 'orange',
         width: '80%',
-        marginTop: '10%',
+        marginTop: '15%',
     },
     titleText: {
         fontSize: 30,
         fontWeight: 'bold',
-        fontFamily: 'cursive',
+        fontFamily: 'ChakraPetch_400Regular',
+        
     },
     container: {
         flex: 5,
         alignItems: 'center',
-        backgroundColor: '#424340',
+        backgroundColor: '#CACACA',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 10 },  
+        shadowOpacity: 0.1,
+        opacity: 0.8,
         width: '95%',
         height: '50%',
         borderRadius: 20,

@@ -67,9 +67,13 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '100%',
         height: 'auto',
-        backgroundColor: '#C5C5A9',
+        backgroundColor: '#e5e7e6',
         justifyContent: 'space-between',
         borderRadius: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },  
+        shadowOpacity: 0.1,
+        width: '100%',
 
     },
     Gcontainer: {
@@ -79,7 +83,7 @@ const styles = StyleSheet.create({
         height: 'auto',
         alignItems: 'center',
         borderRadius: 20,
-        backgroundColor: '#F8FBF1',
+        backgroundColor: '#FBFBFB',
     },
     urgentContainer: {
         display: 'flex',
@@ -93,6 +97,7 @@ const styles = StyleSheet.create({
     Important: {
         color: 'red',
         fontWeight: 'bold',
+        fontFamily: 'ChakraPetch_400Regular',
     },
     trashContainer: {
         display: 'flex',
@@ -106,6 +111,7 @@ const styles = StyleSheet.create({
     Tasks: {
         marginLeft: 10,
         fontSize: 20,
+        fontFamily: 'ChakraPetch_400Regular',
     },
     taskContainer : {
         display: 'flex',

@@ -77,7 +77,10 @@ const MyAgenda = () => {
 
 
   return (
-    <View style={{ flex: 1, marginTop: '15%' }}>
+    <View style={{ flex: 1, marginTop: '20%' }}>
+                  <View style={styles.title}>
+                <Text style={styles.titleText}>AGENDA</Text>
+            </View>
       <Agenda
         items={items}
         loadItemsForMonth={loadItems}
@@ -96,7 +99,7 @@ const MyAgenda = () => {
         onRequestClose={() => setModalVisible(false)}
       >
         <View style={styles.modal}>
-          <Text style={{marginBottom: 20}}>Ajouter une note pour {selectedDate}</Text>
+          <Text style={{marginBottom: 20, fontFamily: 'ChakraPetch_400Regular',}}>Ajouter une note pour {selectedDate}</Text>
           <TextInput
            
             value={note}
@@ -110,7 +113,7 @@ const MyAgenda = () => {
           </View>
           <Text style = {{margin: 10}}> - </Text>
           <View style={styles.timeContainer}>
-            <Button title="Heure de fin" />
+            <Button title="Heure de fin"/>
           </View>
           </View>
           <View style={ {flexDirection: 'row', gap: 80}}>
@@ -135,7 +138,7 @@ const MyAgenda = () => {
             />
           )}
           </View>
-          <View style={{justifyContent: 'space-between', marginTop: 30}}>
+          <View style={{justifyContent: 'space-between', marginTop: 30, }}>
           <Button title="Enregistrer" onPress={saveNote} />
           <Button title="Annuler" onPress={() => setModalVisible(false)} />
           </View>
@@ -169,6 +172,7 @@ const styles = StyleSheet.create({
     height: 100,
     marginBottom: 20,
     borderRadius: 10,
+    fontFamily: 'ChakraPetch_400Regular',
     padding: 10,
   },
   timeContainer: {
@@ -176,6 +180,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
   },
+  title: {
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
+},
+titleText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    fontFamily: 'ChakraPetch_400Regular',
+},
 });
 
 export default MyAgenda;
