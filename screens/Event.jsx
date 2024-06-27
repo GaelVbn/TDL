@@ -84,6 +84,11 @@ const MyAgenda = () => {
         selected={new Date().toISOString().split('T')[0]}
         renderItem={renderItem}
         onDayPress={handleDayPress}
+        theme={{
+          selectedDayBackgroundColor: '#DA7B27',
+          agendaTodayColor: '#DA7B27',
+          dotColor: '#DA7B27',
+          }}
       />
       <Modal
         visible={modalVisible}
