@@ -149,7 +149,12 @@ const styles = StyleSheet.create({
   item: {
     margin: 10,
     padding: 10,
-    backgroundColor: 'white',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    opacity: 0.8,
   },
   modal: {
     flex: 1,
