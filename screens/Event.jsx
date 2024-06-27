@@ -79,7 +79,7 @@ const MyAgenda = () => {
   return (
     <View style={{ flex: 1, marginTop: '20%' }}>
                   <View style={styles.title}>
-                <Text style={styles.titleText}>AGENDA</Text>
+                <Text style={styles.titleText}>CALENDAR</Text>
             </View>
       <Agenda
         items={items}
