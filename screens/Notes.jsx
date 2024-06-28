@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, ScrollView, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNoteToStore, updateNoteInStore } from '../reducers/notes';
@@ -63,7 +63,8 @@ export default function Notes() {
     ));
     
     return (
-        <View style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>NOTES</Text>
             </View>
@@ -140,6 +141,8 @@ export default function Notes() {
                             onChangeText={(e) => setDescription(e)}
                             value={description}
                             multiline
+                            blurOnSubmit
+                            onSubmitEditing={() => Keyboard.dismiss()}
                         />
                     </View>
                     <View style={styles.colorBtnContainer}>
@@ -156,6 +159,7 @@ export default function Notes() {
                 </View>
             </Modal>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 

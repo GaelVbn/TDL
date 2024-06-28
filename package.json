@@ -21,6 +21,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~51.0.14",
     "expo-status-bar": "~1.12.1",
+    "expo-updates": "~0.25.18",
     "react": "18.2.0",
     "react-native": "0.74.2",
     "react-native-calendars": "^1.1305.0",
