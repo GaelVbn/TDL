@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
+        marginBottom: 20,
         //backgroundColor: 'red',
     },
     logoAdd: {
@@ -284,7 +285,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily: 'ChakraPetch_400Regular',
-        color: '#7E7E7E',
+        color: '#e5e7e6',
     },
     btnContainer: {
         flex: 3.5,
